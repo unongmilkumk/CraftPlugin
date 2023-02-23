@@ -1,0 +1,3 @@
+name: Crafting
+version: '${version}'
+main: com.unongmilk.crafting.Main
