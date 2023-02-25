@@ -3,15 +3,14 @@ package com.unongmilk.crafting;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
-    public static Main INSTANCE;
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
+        getServer().getLogger().info("Enable");
     }
 
     @Override
     public void onDisable() {
-
+        getServer().getLogger().info("Disable");
     }
 }
