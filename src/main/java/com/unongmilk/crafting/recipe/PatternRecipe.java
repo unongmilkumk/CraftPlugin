@@ -7,13 +7,11 @@ import java.util.ArrayList;
 public class PatternRecipe {
     public ArrayList<ItemStack> recipe;
     public ItemStack result;
-    public int percentage;
     public String name;
 
-    public PatternRecipe(ArrayList<ItemStack> recipe, ItemStack result, int percentage, String name) {
+    public PatternRecipe(ArrayList<ItemStack> recipe, ItemStack result, String name) {
         this.recipe = recipe;
         this.result = result;
-        this.percentage = percentage;
         this.name = name;
     }
 
@@ -23,10 +21,6 @@ public class PatternRecipe {
 
     public ItemStack getResult() {
         return result;
-    }
-
-    public int getPercentage() {
-        return percentage;
     }
 
     public ArrayList<ItemStack> getRecipe() {

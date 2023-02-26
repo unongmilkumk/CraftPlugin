@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,22 +18,29 @@ public class WeaponCrafting implements Listener {
 
     public static Inventory getInventory() {
         Inventory inv = Bukkit.createInventory(null, 54, "무기 작업대");
-        inv.forEach(s -> {
-            s.setType(Material.IRON_AXE);
-            s.setDurability((short) 64);
-        });
-        inv.setItem(1, new ItemStack(Material.AIR));
-        inv.setItem(2, new ItemStack(Material.AIR));
-        inv.setItem(3, new ItemStack(Material.AIR));
-        inv.setItem(7, new ItemStack(Material.IRON_AXE, 1, (short) 64));
+        for (int i=0; i < 54 ; i++ ) {
+            inv.setItem(i, new ItemStack(Material.IRON_AXE, 1, (short) 64));
+        }
+        inv.setItem(12, new ItemStack(Material.AIR));
+        inv.setItem(13, new ItemStack(Material.AIR));
+        inv.setItem(14, new ItemStack(Material.AIR));
+        inv.setItem(21, new ItemStack(Material.AIR));
+        inv.setItem(22, new ItemStack(Material.AIR));
+        inv.setItem(23, new ItemStack(Material.AIR));
+        inv.setItem(30, new ItemStack(Material.AIR));
+        inv.setItem(31, new ItemStack(Material.AIR));
+        inv.setItem(32, new ItemStack(Material.AIR));
+        inv.setItem(40, new ItemStack(Material.IRON_AXE, 1, (short) 64));
         return inv;
     }
 
     @EventHandler
     public void onClickCrafting(InventoryClickEvent event) {
-        Inventory inv = event.getInventory();
+        Inventory inv = event.getClickedInventory();
+        int slot = event.getSlot();
         if (inv.getTitle().equals(WeaponCrafting.getInventory().getTitle())) {
-            if (event.getSlot() == 7) {
+            if (slot == 40) {
+                event.setCancelled(true);
                 weaponRecipe.forEach(i -> i.recipe.forEach(s -> {
                     ArrayList<ItemStack> a = new ArrayList<>();
                     a.add(inv.getItem(12));
@@ -44,7 +52,7 @@ public class WeaponCrafting implements Listener {
                     a.add(inv.getItem(30));
                     a.add(inv.getItem(31));
                     a.add(inv.getItem(32));
-                    if (s.equals(a)) {
+                    if (i.recipe.equals(a)) {
                         inv.setItem(12, new ItemStack(Material.AIR));
                         inv.setItem(13, new ItemStack(Material.AIR));
                         inv.setItem(14, new ItemStack(Material.AIR));
@@ -54,14 +62,28 @@ public class WeaponCrafting implements Listener {
                         inv.setItem(30, new ItemStack(Material.AIR));
                         inv.setItem(31, new ItemStack(Material.AIR));
                         inv.setItem(32, new ItemStack(Material.AIR));
-                        if (Rd.roll(1, Math.round(1 / (i.getPercentage() / 100))) == 1 ) {
+                        if (Rd.roll(1, 2) == 1 ) {
                             event.getWhoClicked().getInventory().addItem(i.result);
                         }
                     }
                 }));
-            } else if (event.getSlot() < 54) {
+            } if (!new ArrayList<>(Arrays.asList(12, 13, 14, 21, 22, 23, 30, 31, 32, 40)).contains(slot)) {
                 event.setCancelled(true);
             }
+        }
+    }
+    @EventHandler
+    public void onClose(InventoryCloseEvent event) {
+        if (event.getInventory().getTitle().equals(getInventory().getTitle())) {
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(12));
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(13));
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(14));
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(21));
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(22));
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(23));
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(30));
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(31));
+            event.getPlayer().getInventory().addItem(event.getInventory().getItem(32));
         }
     }
 }

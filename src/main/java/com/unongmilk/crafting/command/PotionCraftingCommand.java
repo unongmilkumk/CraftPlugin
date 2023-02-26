@@ -1,6 +1,8 @@
 package com.unongmilk.crafting.command;
 
+import com.unongmilk.crafting.gui.PotionCrafting;
 import com.unongmilk.crafting.gui.WeaponCrafting;
+import com.unongmilk.crafting.recipe.PotionRecipe;
 import com.unongmilk.crafting.recipe.WeaponRecipe;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,12 +18,11 @@ public class PotionCraftingCommand implements CommandExecutor {
         Player p = (Player) sender;
         if (!p.isOp()) return false;
         if (args.length == 0) {
-            p.openInventory(WeaponCrafting.getInventory());
+            p.openInventory(PotionCrafting.getInventory());
             return true;
-        } else if (args.length >= 2) {
+        } else if (args.length == 2) {
             switch (args[0]) {
                 case "add" : {
-                    int a = 0;
                     ArrayList<ItemStack> rcp = new ArrayList<>();
                     rcp.add(p.getInventory().getItem(0));
                     rcp.add(p.getInventory().getItem(1));
@@ -33,21 +34,12 @@ public class PotionCraftingCommand implements CommandExecutor {
                     rcp.add(p.getInventory().getItem(7));
                     rcp.add(p.getInventory().getItem(8));
 
-                    try {
-                        if (args.length == 3) a = Integer.parseInt(args[2]);
-                        else a = 50;
-                    } catch (NumberFormatException e) {
-                        a = 50;
-                        e.printStackTrace();
-                    } finally {
-                        new WeaponRecipe(rcp, p.getInventory().getItemInOffHand(), a, args[1]);
-                    }
-                    break;
+                    PotionCrafting.potionRecipe.add(new PotionRecipe(rcp, p.getInventory().getItemInOffHand(), args[1]));
                 }
                 case "remove" : {
-                    WeaponCrafting.weaponRecipe.forEach(s -> {
+                    PotionCrafting.potionRecipe.forEach(s -> {
                         if (s.getName().equals(args[1])) {
-                            WeaponCrafting.weaponRecipe.remove(s);
+                            PotionCrafting.potionRecipe.remove(s);
                         }
                     });
                 }
