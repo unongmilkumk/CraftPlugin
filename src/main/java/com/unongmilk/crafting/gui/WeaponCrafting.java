@@ -38,37 +38,40 @@ public class WeaponCrafting implements Listener {
     public void onClickCrafting(InventoryClickEvent event) {
         Inventory inv = event.getClickedInventory();
         int slot = event.getSlot();
-        if (inv.getTitle().equals(WeaponCrafting.getInventory().getTitle())) {
-            if (slot == 40) {
-                event.setCancelled(true);
-                weaponRecipe.forEach(i -> i.recipe.forEach(s -> {
-                    ArrayList<ItemStack> a = new ArrayList<>();
-                    a.add(inv.getItem(12));
-                    a.add(inv.getItem(13));
-                    a.add(inv.getItem(14));
-                    a.add(inv.getItem(21));
-                    a.add(inv.getItem(22));
-                    a.add(inv.getItem(23));
-                    a.add(inv.getItem(30));
-                    a.add(inv.getItem(31));
-                    a.add(inv.getItem(32));
-                    if (i.recipe.equals(a)) {
-                        inv.setItem(12, new ItemStack(Material.AIR));
-                        inv.setItem(13, new ItemStack(Material.AIR));
-                        inv.setItem(14, new ItemStack(Material.AIR));
-                        inv.setItem(21, new ItemStack(Material.AIR));
-                        inv.setItem(22, new ItemStack(Material.AIR));
-                        inv.setItem(23, new ItemStack(Material.AIR));
-                        inv.setItem(30, new ItemStack(Material.AIR));
-                        inv.setItem(31, new ItemStack(Material.AIR));
-                        inv.setItem(32, new ItemStack(Material.AIR));
-                        if (Rd.roll(1, 2) == 1 ) {
-                            event.getWhoClicked().getInventory().addItem(i.result);
+        if (event.getInventory().getTitle() != null) {
+            if (inv.getTitle().equals(WeaponCrafting.getInventory().getTitle())) {
+                if (slot == 40) {
+                    event.setCancelled(true);
+                    weaponRecipe.forEach(i -> i.recipe.forEach(s -> {
+                        ArrayList<ItemStack> a = new ArrayList<>();
+                        a.add(inv.getItem(12));
+                        a.add(inv.getItem(13));
+                        a.add(inv.getItem(14));
+                        a.add(inv.getItem(21));
+                        a.add(inv.getItem(22));
+                        a.add(inv.getItem(23));
+                        a.add(inv.getItem(30));
+                        a.add(inv.getItem(31));
+                        a.add(inv.getItem(32));
+                        if (i.recipe.equals(a)) {
+                            inv.setItem(12, new ItemStack(Material.AIR));
+                            inv.setItem(13, new ItemStack(Material.AIR));
+                            inv.setItem(14, new ItemStack(Material.AIR));
+                            inv.setItem(21, new ItemStack(Material.AIR));
+                            inv.setItem(22, new ItemStack(Material.AIR));
+                            inv.setItem(23, new ItemStack(Material.AIR));
+                            inv.setItem(30, new ItemStack(Material.AIR));
+                            inv.setItem(31, new ItemStack(Material.AIR));
+                            inv.setItem(32, new ItemStack(Material.AIR));
+                            if (Rd.roll(1, 2) == 1) {
+                                event.getWhoClicked().getInventory().addItem(i.result);
+                            }
                         }
-                    }
-                }));
-            } if (!new ArrayList<>(Arrays.asList(12, 13, 14, 21, 22, 23, 30, 31, 32, 40)).contains(slot)) {
-                event.setCancelled(true);
+                    }));
+                }
+                if (!new ArrayList<>(Arrays.asList(12, 13, 14, 21, 22, 23, 30, 31, 32, 40)).contains(slot)) {
+                    event.setCancelled(true);
+                }
             }
         }
     }
