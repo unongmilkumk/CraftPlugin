@@ -8,11 +8,13 @@ public class PotionRecipe {
     public ArrayList<ItemStack> recipe;
     public ItemStack result;
     public String name;
+    public int minlevel;
 
-    public PotionRecipe(ArrayList<ItemStack> recipe, ItemStack result, String name) {
+    public PotionRecipe(ArrayList<ItemStack> recipe, ItemStack result, String name, int minlevel) {
         this.recipe = recipe;
         this.result = result;
         this.name = name;
+        this.minlevel = minlevel;
     }
 
     public String getName() {
@@ -25,5 +27,9 @@ public class PotionRecipe {
 
     public ArrayList<ItemStack> getRecipe() {
         return recipe;
+    }
+
+    public int getMinlevel() {
+        return minlevel;
     }
 }

@@ -4,6 +4,6 @@ import java.util.Random;
 
 public class Rd {
     public static int roll(int min, int max) {
-        return new Random().nextInt(max - min) + min;
+        return new Random().nextInt(max - min + 1) + min;
     }
 }

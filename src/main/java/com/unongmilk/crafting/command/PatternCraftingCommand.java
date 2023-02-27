@@ -1,6 +1,8 @@
 package com.unongmilk.crafting.command;
 
+import com.unongmilk.crafting.gui.PatternAddCrafting;
 import com.unongmilk.crafting.gui.PatternCrafting;
+import com.unongmilk.crafting.gui.WeaponAddCrafting;
 import com.unongmilk.crafting.recipe.PatternRecipe;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,21 +20,12 @@ public class PatternCraftingCommand implements CommandExecutor {
         if (args.length == 0) {
             p.openInventory(PatternCrafting.getInventory());
             return true;
-        } else if (args.length == 2) {
+        } else if (args.length >= 2) {
             switch (args[0]) {
                 case "add" : {
-                    ArrayList<ItemStack> rcp = new ArrayList<>();
-                    rcp.add(p.getInventory().getItem(0));
-                    rcp.add(p.getInventory().getItem(1));
-                    rcp.add(p.getInventory().getItem(2));
-                    rcp.add(p.getInventory().getItem(3));
-                    rcp.add(p.getInventory().getItem(4));
-                    rcp.add(p.getInventory().getItem(5));
-                    rcp.add(p.getInventory().getItem(6));
-                    rcp.add(p.getInventory().getItem(7));
-                    rcp.add(p.getInventory().getItem(8));
-
-                    PatternCrafting.patternRecipe.add(new PatternRecipe(rcp, p.getInventory().getItemInOffHand(), args[1]));
+                    int ml = 1;
+                    if (args.length == 3) ml = Integer.parseInt(args[2]);
+                    p.openInventory(new PatternAddCrafting().getInventory(args[1], ml));
                     break;
                 }
                 case "remove" : {
